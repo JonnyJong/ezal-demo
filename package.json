@@ -28,7 +28,7 @@
     "@types/pug": "^2.0.6",
     "@types/stylus": "^0.48.38",
     "@types/yaml": "^1.9.7",
-    "ezal": "0.0.1"
+    "ezal": "0.0.2"
   },
   "dependencies": {
     "chokidar": "^3.5.3",
