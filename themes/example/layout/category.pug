@@ -1,0 +1,6 @@
+extends includes/base.pug
+
+block content
+  h1=page.title
+  each item in items
+    +post(item)

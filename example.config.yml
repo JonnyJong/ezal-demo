@@ -1,0 +1,12 @@
+site:
+  name: Ezal
+
+nav:
+  - name: Home
+    url: /
+  - name: Categories
+    url: /categories/
+  - name: Tags
+    url: /tags/
+  - name: Repo
+    url: https://github.com/JonnyJong/ezal

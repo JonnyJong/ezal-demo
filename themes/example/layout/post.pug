@@ -1,0 +1,7 @@
+extends includes/base.pug
+
+block content
+  header
+    h1=page.title
+    time=['January','February','March','April','May','June','July','August','September','October','November','December'][page.date.getMonth()] + ' ' + page.date.getDate() + ', ' + page.date.getFullYear()
+  article!=page.context

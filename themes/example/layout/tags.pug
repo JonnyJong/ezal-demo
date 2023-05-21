@@ -1,0 +1,7 @@
+extends includes/base.pug
+
+block content
+  h1 Tags
+  .tags
+    each item in tags
+      a(href=url4("/tags/" + item.name + '/'))=item.name + ' - ' + item.items.length

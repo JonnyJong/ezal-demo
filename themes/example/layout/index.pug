@@ -1,0 +1,5 @@
+extends includes/base.pug
+
+block content
+  each item in posts.sort((a,b)=>b.date.getTime() - a.date.getTime())
+    +post(item)
