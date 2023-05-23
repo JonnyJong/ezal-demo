@@ -1,23 +1,22 @@
 const path = require('path');
-const categoriesLayout = path.join(__dirname, '../../layout/categories.pug');
 const categoriesOutput = path.join(process.cwd(), './out/categories/');
-const tagsLayout = path.join(__dirname, '../../layout/tags.pug');
 const tagsOutput = path.join(process.cwd(), './out/tags/');
-const categoryLayout = path.join(__dirname, '../../layout/category.pug');
-const tagLayout = path.join(__dirname, '../../layout/tag.pug');
-const { mapToArray, generate } = require('./helper/helper');
-const { url4 } = require('../../plugin/pug/helper')();
+const { mapToArray, generate } = require('./_helper/helper');
 
-module.exports = async ({config, theme, pages, posts, categories, tags, Page, Post})=>{
-  let tagArray = mapToArray(tags);
-  let categoriesArray =  mapToArray(categories);
-  await generate(tagsLayout, {config, theme, pages, posts, categories, tags: tagArray, Page, Post, page: {title: 'Tags', layout: 'tags'}, url4}, path.join(tagsOutput, 'index.html'));
-  await generate(categoriesLayout, {config, theme, pages, posts, categories: categoriesArray, tags, Page, Post, page: {title: 'categories', layout: 'categories'}, url4}, path.join(categoriesOutput, 'index.html'));
-  for (let i = 0; i < categoriesArray.length; i++) {
-    await generate(tagLayout, {config, theme, pages, posts, categories, tags, items: tagArray[i].items, Page, Post, page: {title: tagArray[i].name, layout: 'tag'}, url4}, path.join(tagsOutput, tagArray[i].name, 'index.html'));
-  }
-  for (let i = 0; i < categoriesArray.length; i++) {
-    await generate(categoryLayout, {config, theme, pages, posts, categories, tags, items: categoriesArray[i].items, Page, Post, page: {title: categoriesArray[i].name, layout: 'category'}, url4}, path.join(categoriesOutput, tagArray[i].name, 'index.html'));
-  }
-  return;
+const { addListener, tags, categories } = require('ezal');
+
+module.exports = async ()=>{
+  addListener('pre-assets', async ()=>{
+    let categoriesArray =  mapToArray(categories);
+    let tagArray = mapToArray(tags);
+    await generate('categories', { categories: categoriesArray, page: { title: 'Categories', layout: 'archive'} }, path.join(categoriesOutput, 'index.html'));
+    await generate('tags', { tags: tagArray, page: { title: 'Tags', layout: 'archive'} }, path.join(tagsOutput, 'index.html'));
+    for (const category of categoriesArray) {
+      await generate('category', { items: category.items, page: { title: category.name, layout: 'archive' }}, path.join(categoriesOutput, category.name, 'index.html'));
+    }
+    for (const tag of tagArray) {
+      await generate('tag', { items: tag.items, page: { title: tag.name, layout: 'archive' }}, path.join(tagsOutput, tag.name, 'index.html'));
+    }
+    return
+  });
 }

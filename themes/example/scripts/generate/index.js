@@ -1,9 +1,11 @@
 const path = require('path');
-const layout = path.join(__dirname, '../../layout/index.pug');
 const output = path.join(process.cwd(), './out/index.html');
-const { generate } = require('./helper/helper');
-const { url4 } = require('../../plugin/pug/helper')();
+const { generate } = require('./_helper/helper');
 
-module.exports = ({config, theme, pages, posts, categories, tags, Page, Post})=>{
-  return generate(layout, {config, theme, pages, posts: Array.from(posts), categories, tags, Page, Post, page: {layout: 'index'}, url4}, output);
+const { addListener, posts } = require('ezal');
+
+module.exports = ()=>{
+  addListener('pre-assets', async ()=>{
+    return generate('index', { posts: Array.from(posts), page: { layout: 'index' }}, output);
+  });
 }
