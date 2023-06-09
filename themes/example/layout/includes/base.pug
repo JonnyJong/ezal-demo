@@ -4,10 +4,10 @@ mixin post(item)
     a(href=url4(item.url))=item.title
     .tags
       each tag in Array.from(item.tags)
-        span=tag
+        span=tag.name
     .cate
       each cate in Array.from(item.categories)
-        span=cate
+        span=cate[1].path.join('/')
 
 doctype html
 html()

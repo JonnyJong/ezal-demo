@@ -1,6 +1,11 @@
 extends includes/base.pug
 
 block content
-  h1=page.title
-  each item in items
-    +post(item)
+  h1="Category: " + page.categoryPath
+  if categories
+    .cate
+      each item in categories
+        a(href=url4("/categories/" + item.path))=item.name + ' - ' + item.size
+  if items.length > 0
+    each item in items
+      +post(item)

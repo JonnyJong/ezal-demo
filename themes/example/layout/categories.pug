@@ -1,7 +1,0 @@
-extends includes/base.pug
-
-block content
-  h1 Categories
-  .cate
-    each item in categories
-      a(href=url4("/categories/" + item.name + '/'))=item.name + ' - ' + item.items.length

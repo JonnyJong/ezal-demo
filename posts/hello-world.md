@@ -6,6 +6,10 @@ tags:
 categories:
   - foo
   - bar
+  - foo:
+    - arr
+  - foo:
+    - gg
 ---
 
 # Welcome
